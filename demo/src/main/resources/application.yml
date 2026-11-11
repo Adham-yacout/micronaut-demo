@@ -1,0 +1,25 @@
+micronaut:
+  application:
+    name: demo
+  server:
+    port: 8080
+
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/micronaut_db
+    username: micronaut_user
+    password: micronaut_pass
+    driver-class-name: org.postgresql.Driver
+    dialect: POSTGRES
+
+jpa:
+  default:
+    entity-scan:
+      packages:
+        - com.example
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        show_sql: true
+        format_sql: true

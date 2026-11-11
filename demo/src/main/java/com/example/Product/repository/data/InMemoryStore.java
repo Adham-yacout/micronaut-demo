@@ -26,14 +26,14 @@ public class InMemoryStore {
     }
 
     private void addProduct(int id) {
-        var product = new Product(id, faker.coffee().blendName(), Product.Type.COFFEE);
+        var product = new Product(id, faker.coffee().blendName(), Product.Type.COFFE);
         products.put(id, product);
         LOG.debug("Added Product: {}", product);
     }
 
     public Product addProduct(Product product) {
-        products.put(product.id(), product);
-        return products.get(product.id());
+        products.put(product.getId(), product);
+        return products.get(product.getId());
     }
 
     public Product deleteProduct(Integer id) {
