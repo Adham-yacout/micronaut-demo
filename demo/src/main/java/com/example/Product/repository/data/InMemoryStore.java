@@ -1,7 +1,7 @@
-package com.example.data;
+package com.example.Product.repository.data;
 
 
-import com.example.Product.Product;
+import com.example.Product.model.Product;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
