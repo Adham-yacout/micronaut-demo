@@ -4,6 +4,7 @@ package com.example.Product;
 import com.example.data.InMemoryStore;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
+import io.micronaut.http.exceptions.HttpStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +35,20 @@ public class ProductsController {
     @Post("/add")
     public Product addProduct(@Body Product product) {
         return store.addProduct(product);
+    }
+
+    @Delete("{id}")
+    public void Deleteid(@PathVariable Integer id)
+    {
+        if(store.getProducts().get(id)!=null)
+        {
+            store.deleteProduct(id);
+        }else{
+            throw new HttpStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Product with id " + id + " not found"
+            );
+        }
+
     }
 }
