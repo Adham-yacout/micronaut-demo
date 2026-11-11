@@ -36,7 +36,7 @@ public class ProductsController {
     @Status(HttpStatus.CREATED)
     @Post("/add")
     public Product addProduct(@Body Product product) {
-        return productService.addProduct();
+        return productService.addProduct(product);
     }
 
 //    @Delete("{id}")
