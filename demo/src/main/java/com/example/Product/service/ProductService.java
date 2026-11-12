@@ -2,31 +2,36 @@ package com.example.Product.service;
 
 
 import com.example.Product.model.Product;
-import com.example.Product.repository.data.InMemoryStore;
+import com.example.Product.repository.ProductRepository;
 import jakarta.inject.Singleton;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Singleton
 public class ProductService {
 
-    private final InMemoryStore store;
-    public ProductService(InMemoryStore store){
-        this.store=store;
+    private final ProductRepository productRepository;
+    public ProductService(ProductRepository productRepository){
+        this.productRepository=productRepository;
     }
 
     public List<Product>  getAllProducts(){
-        return new ArrayList<>(store.getProducts().values());
+        return productRepository.findAll();
     }
 
-    public Product getProductById(Integer id)
+    public Optional<Product> getProductById(Integer id)
     {
-        return store.getProducts().get(id);
+        return productRepository.findById(id);
     }
 
     public Product addProduct(Product product)
     {
-        return store.addProduct(product);
+        return productRepository.save(product);
+    }
+
+    public  void  deleteProduct(Integer id)
+    {
+        productRepository.deleteById(id);
     }
 }
