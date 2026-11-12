@@ -1,15 +1,14 @@
-package com.example.Product.controller;
+package com.example.products.controller;
 
 
-import com.example.Product.model.Product;
-import com.example.Product.service.ProductService;
+import com.example.products.model.Product;
+import com.example.products.service.ProductService;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
-import io.micronaut.http.exceptions.HttpStatusException;
+import jakarta.validation.Valid;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller("/products")
 public class ProductsController {
@@ -28,14 +27,12 @@ public class ProductsController {
     }
 
     @Get("{id}")
-    public HttpResponse<Product> getproduct(@PathVariable Integer id)
-    {
-        return productService.getProductById(id).map(HttpResponse::ok).orElse(HttpResponse.notFound());
+    public HttpResponse<Product> getproduct(@PathVariable Integer id) {
+        return HttpResponse.ok(productService.getProductById(id));
     }
-
     @Status(HttpStatus.CREATED)
     @Post("/add")
-    public HttpResponse<Product> addProduct(@Body Product product) {
+    public HttpResponse<Product> addProduct(@Body @Valid Product product) {
        Product savedProduct = productService.addProduct(product);
         return HttpResponse.created(savedProduct);
     }
@@ -43,10 +40,6 @@ public class ProductsController {
 
     @Delete("{id}")
     public HttpResponse<Void> deleteProduct(@PathVariable Integer id) {
-        if (productService.getProductById(id).isEmpty()) {
-            return HttpResponse.notFound();
-        }
-
         productService.deleteProduct(id);
         return HttpResponse.noContent();
     }
