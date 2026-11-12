@@ -6,12 +6,15 @@ micronaut:
 
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/micronaut_db
+    url: jdbc:postgresql://127.0.0.1:5433/micronaut_db
     username: micronaut_user
     password: micronaut_pass
     driver-class-name: org.postgresql.Driver
     dialect: POSTGRES
-
+flyway:
+  datasources:
+    default:
+      enabled: true
 jpa:
   default:
     entity-scan:
@@ -20,6 +23,6 @@ jpa:
     properties:
       hibernate:
         hbm2ddl:
-          auto: update
+          auto: validate
         show_sql: true
         format_sql: true

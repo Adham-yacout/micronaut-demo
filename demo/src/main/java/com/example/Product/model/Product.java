@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 @NoArgsConstructor
 @Getter
 @Setter
+@Serdeable
 public class Product {
 
     @Id
