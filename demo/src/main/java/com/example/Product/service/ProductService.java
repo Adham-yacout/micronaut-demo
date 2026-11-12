@@ -34,4 +34,14 @@ public class ProductService {
     {
         productRepository.deleteById(id);
     }
+
+    public Optional<Product> updateProduct(Integer id, Product updatedProduct) {
+        return productRepository.findById(id)
+                .map(existingProduct -> {
+                    existingProduct.setName(updatedProduct.getName());
+                    existingProduct.setType(updatedProduct.getType());
+
+                    return productRepository.update(existingProduct);
+                });
+    }
 }
