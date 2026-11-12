@@ -3,6 +3,7 @@ package com.example.products.exception;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.server.exceptions.response.ErrorResponseProcessor;
 import io.micronaut.security.authentication.AuthorizationException;
@@ -44,14 +45,22 @@ public class CustomAuthorizationExceptionHandler
             HttpRequest request,
             AuthorizationException exception) {
 
+        boolean forbidden = exception.isForbidden();
+
+        HttpStatus status = forbidden
+                ? HttpStatus.FORBIDDEN
+                : HttpStatus.UNAUTHORIZED;
+
         ErrorResponse error = new ErrorResponse(
                 LocalDateTime.now(),
-                401,
-                "Unauthorized",
-                "Authentication token is missing or invalid",
+                status.getCode(),
+                forbidden ? "Forbidden" : "Unauthorized",
+                forbidden
+                        ? "You do not have permission to access this resource"
+                        : "Authentication token is missing or invalid",
                 request.getPath()
         );
 
-        return HttpResponse.unauthorized().body(error);
+        return HttpResponse.status(status).body(error);
     }
 }

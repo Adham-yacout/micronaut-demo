@@ -38,7 +38,10 @@ public class GlobalExceptionHandler {
         String message = exception.getConstraintViolations()
                 .stream()
                 .map(violation ->
-                        violation.getMessage() + ": " + "should not be empty" )
+                        violation.getPropertyPath()
+                                .toString()
+                                .substring(violation.getPropertyPath().toString().lastIndexOf('.') + 1)
+                                + ": " + violation.getMessage())
                 .collect(Collectors.joining(", "));
 
         ErrorResponse error = new ErrorResponse(

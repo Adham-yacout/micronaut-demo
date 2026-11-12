@@ -47,7 +47,7 @@ public class ProductsController {
     @Put("{id}")
     public HttpResponse<Product> updateProduct(
             @PathVariable Integer id,
-            @Body Product updatedProduct) {
+            @Body @Valid Product updatedProduct) {
 
         return productService.updateProduct(id, updatedProduct)
                 .map(HttpResponse::ok)

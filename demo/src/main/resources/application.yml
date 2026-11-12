@@ -15,6 +15,8 @@ micronaut:
           - isAuthenticated()
     token:
       jwt:
+        claims-validators:
+          expiration: true
         signatures:
           secret:
             generator:
