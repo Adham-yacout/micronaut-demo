@@ -43,7 +43,7 @@ dependencies {
 
     implementation("io.micronaut.validation:micronaut-validation")
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
-
+    implementation("io.micronaut.security:micronaut-security-jwt")
 }
 
 
