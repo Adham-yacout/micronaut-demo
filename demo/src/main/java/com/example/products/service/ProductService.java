@@ -1,8 +1,9 @@
-package com.example.Product.service;
+package com.example.products.service;
 
 
-import com.example.Product.model.Product;
-import com.example.Product.repository.ProductRepository;
+import com.example.products.exception.ProductNotFoundException;
+import com.example.products.model.Product;
+import com.example.products.repository.ProductRepository;
 import jakarta.inject.Singleton;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(Integer id)
-    {
-        return productRepository.findById(id);
+    public Product getProductById(Integer id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     public Product addProduct(Product product)
@@ -32,7 +33,8 @@ public class ProductService {
 
     public  void  deleteProduct(Integer id)
     {
-        productRepository.deleteById(id);
+       Product product= productRepository.findById(id).orElseThrow( ()-> new ProductNotFoundException(id));
+        productRepository.delete(product);
     }
 
     public Optional<Product> updateProduct(Integer id, Product updatedProduct) {

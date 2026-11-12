@@ -1,13 +1,13 @@
-package com.example.Product.model;
+package com.example.products.model;
 
 import io.micronaut.serde.annotation.Serdeable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.lang.reflect.Type;
 
 @Entity
 @Table(name="products")
@@ -22,15 +22,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable= false)
-    private  String name;
+    @NotBlank(message = "name")
+    @Column(nullable = false)
+    private String name;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Type type;
 
     public enum Type{
-        COFFE, TEA, OTHER
+        COFFEE, TEA, OTHER
     }
 
 

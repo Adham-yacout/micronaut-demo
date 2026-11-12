@@ -1,7 +1,7 @@
-package com.example.Product.repository.data;
+package com.example.products.repository.data;
 
 
-import com.example.Product.model.Product;
+import com.example.products.model.Product;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Singleton;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class InMemoryStore {
     }
 
     private void addProduct(int id) {
-        var product = new Product(id, faker.coffee().blendName(), Product.Type.COFFE);
+        var product = new Product(id, faker.coffee().blendName(), Product.Type.COFFEE);
         products.put(id, product);
         LOG.debug("Added Product: {}", product);
     }
