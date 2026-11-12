@@ -50,4 +50,14 @@ public class ProductsController {
         productService.deleteProduct(id);
         return HttpResponse.noContent();
     }
+
+    @Put("{id}")
+    public HttpResponse<Product> updateProduct(
+            @PathVariable Integer id,
+            @Body Product updatedProduct) {
+
+        return productService.updateProduct(id, updatedProduct)
+                .map(HttpResponse::ok)
+                .orElse(HttpResponse.notFound());
+    }
 }
