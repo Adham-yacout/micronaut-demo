@@ -4,6 +4,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.security.token.generator.TokenGenerator;
 
+import java.time.Instant;
 import java.util.Map;
 
 @Controller("/auth")
@@ -18,9 +19,15 @@ public class AuthController {
     @Post("/token")
     public Map<String, String> generateToken() {
 
+
+        long expirationTime = Instant.now()
+                .plusSeconds(1 * 60)
+                .getEpochSecond();
+
         Map<String, Object> claims = Map.of(
                 "sub", "test-user",
-                "roles", new String[]{"USER"}
+                "roles", new String[]{"USER"},
+                "exp", expirationTime
         );
 
         String token = tokenGenerator.generateToken(claims)
