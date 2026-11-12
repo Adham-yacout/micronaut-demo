@@ -40,18 +40,14 @@ public class ProductsController {
         return HttpResponse.created(savedProduct);
     }
 
+
     @Delete("{id}")
-    public void Deleteid(@PathVariable Integer id)
-    {
-        if(productService.getProductById(id)!=null)
-        {
-            productService.deleteProduct(id);
-        }else{
-            throw new HttpStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Product with id " + id + " not found"
-            );
+    public HttpResponse<Void> deleteProduct(@PathVariable Integer id) {
+        if (productService.getProductById(id).isEmpty()) {
+            return HttpResponse.notFound();
         }
 
+        productService.deleteProduct(id);
+        return HttpResponse.noContent();
     }
 }
