@@ -7,6 +7,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Error;
 import jakarta.validation.ConstraintViolationException;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Controller
@@ -18,6 +19,7 @@ public class GlobalExceptionHandler {
             ProductNotFoundException exception) {
 
         ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
                 404,
                 "Not Found",
                 exception.getMessage(),
@@ -40,6 +42,7 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.joining(", "));
 
         ErrorResponse error = new ErrorResponse(
+                LocalDateTime.now(),
                 400,
                 "Bad Request",
                 message,
@@ -48,18 +51,18 @@ public class GlobalExceptionHandler {
 
         return HttpResponse.badRequest(error);
     }
-    @Error(global = true, exception = Exception.class)
-    public HttpResponse<ErrorResponse> handleGeneral(
-            HttpRequest<?> request,
-            Exception exception) {
-
-        ErrorResponse error = new ErrorResponse(
-                500,
-                "Internal Server Error",
-                "An unexpected error occurred",
-                request.getPath()
-        );
-
-        return HttpResponse.serverError(error);
-    }
+//    @Error(global = true, exception = Exception.class)
+//    public HttpResponse<ErrorResponse> handleGeneral(
+//            HttpRequest<?> request,
+//            Exception exception) {
+//
+//        ErrorResponse error = new ErrorResponse(
+//                500,
+//                "Internal Server Error",
+//                "An unexpected error occurred",
+//                request.getPath()
+//        );
+//
+//        return HttpResponse.serverError(error);
+//    }
 }
