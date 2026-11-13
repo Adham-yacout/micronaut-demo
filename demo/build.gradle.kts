@@ -28,9 +28,9 @@ dependencies {
 
 // PostgreSQL driver
     runtimeOnly("org.postgresql:postgresql")
-    compileOnly("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
-    testImplementation("io.micronaut:micronaut-http-client")
+
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     compileOnly("org.projectlombok:lombok")
@@ -45,6 +45,10 @@ dependencies {
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
     implementation("io.micronaut.security:micronaut-security-jwt")
     testImplementation("org.mockito:mockito-core")
+
+    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
+
+    implementation("io.micronaut.kafka:micronaut-kafka")
 }
 
 

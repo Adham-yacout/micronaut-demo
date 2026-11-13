@@ -45,3 +45,8 @@ jpa:
           auto: validate
         show_sql: true
         format_sql: true
+
+
+kafka:
+  bootstrap:
+    servers: localhost:9092

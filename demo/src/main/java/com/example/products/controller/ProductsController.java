@@ -3,6 +3,9 @@ package com.example.products.controller;
 
 import com.example.products.model.Product;
 import com.example.products.service.ProductService;
+import io.micronaut.data.model.Page;
+import io.micronaut.data.model.Pageable;
+import io.micronaut.data.model.Sort;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
@@ -22,9 +25,18 @@ public class ProductsController {
 
     @Secured({"USER", "ADMIN"})
     @Get
-    public List<Product> getAllProducts()
-    {
-        return productService.getAllProducts() ;
+    public Page<Product> getAllProducts(
+            @QueryValue(defaultValue = "0") int page,
+            @QueryValue(defaultValue = "5") int size,
+            @QueryValue(defaultValue = "asc") String direction) {
+
+        Sort.Order order = direction.equalsIgnoreCase("desc")
+                ? Sort.Order.desc("id")
+                : Sort.Order.asc("id");
+
+        return productService.getAllProducts(
+                Pageable.from(page, size, Sort.of(order))
+        );
     }
 
     @Secured({"USER", "ADMIN"})
