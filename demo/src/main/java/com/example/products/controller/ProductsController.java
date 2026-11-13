@@ -6,6 +6,7 @@ import com.example.products.service.ProductService;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
+import io.micronaut.security.annotation.Secured;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -19,17 +20,20 @@ public class ProductsController {
         this.productService = productService;
     }
 
-
+    @Secured({"USER", "ADMIN"})
     @Get
     public List<Product> getAllProducts()
     {
         return productService.getAllProducts() ;
     }
 
+    @Secured({"USER", "ADMIN"})
     @Get("{id}")
     public HttpResponse<Product> getproduct(@PathVariable Integer id) {
         return HttpResponse.ok(productService.getProductById(id));
     }
+
+    @Secured("ADMIN")
     @Status(HttpStatus.CREATED)
     @Post("/add")
     public HttpResponse<Product> addProduct(@Body @Valid Product product) {
@@ -37,17 +41,17 @@ public class ProductsController {
         return HttpResponse.created(savedProduct);
     }
 
-
+    @Secured("ADMIN")
     @Delete("{id}")
     public HttpResponse<Void> deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);
         return HttpResponse.noContent();
     }
-
+    @Secured("ADMIN")
     @Put("{id}")
     public HttpResponse<Product> updateProduct(
             @PathVariable Integer id,
-            @Body Product updatedProduct) {
+            @Body @Valid Product updatedProduct) {
 
         return productService.updateProduct(id, updatedProduct)
                 .map(HttpResponse::ok)
