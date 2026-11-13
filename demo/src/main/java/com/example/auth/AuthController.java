@@ -21,7 +21,7 @@ public class AuthController {
 
 
         long expirationTime = Instant.now()
-                .plusSeconds(1 * 60)
+                .plusSeconds(15 * 60)
                 .getEpochSecond();
 
         Map<String, Object> claims = Map.of(
