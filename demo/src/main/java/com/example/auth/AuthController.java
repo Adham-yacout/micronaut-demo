@@ -26,7 +26,7 @@ public class AuthController {
 
         Map<String, Object> claims = Map.of(
                 "sub", "test-user",
-                "roles", new String[]{"USER"},
+                "roles", new String[]{"ADMIN"},
                 "exp", expirationTime
         );
 

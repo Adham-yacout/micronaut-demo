@@ -39,11 +39,12 @@ dependencies {
     implementation("io.micronaut.flyway:micronaut-flyway")
 
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
-    runtimeOnly("org.postgresql:postgresql")
+
 
     implementation("io.micronaut.validation:micronaut-validation")
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")
     implementation("io.micronaut.security:micronaut-security-jwt")
+    testImplementation("org.mockito:mockito-core")
 }
 
 
