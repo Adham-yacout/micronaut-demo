@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name="products")
 @AllArgsConstructor
@@ -16,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Serdeable
-public class Product {
+public class Product implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

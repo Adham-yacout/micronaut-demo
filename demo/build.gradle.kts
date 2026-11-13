@@ -39,7 +39,10 @@ dependencies {
     implementation("io.micronaut.flyway:micronaut-flyway")
 
     runtimeOnly("org.flywaydb:flyway-database-postgresql")
+    implementation("io.micronaut.redis:micronaut-redis-lettuce-cache")
 
+
+    implementation("io.micronaut.cache:micronaut-cache-core")
 
     implementation("io.micronaut.validation:micronaut-validation")
     annotationProcessor("io.micronaut.validation:micronaut-validation-processor")

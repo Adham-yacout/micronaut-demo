@@ -50,3 +50,11 @@ jpa:
 kafka:
   bootstrap:
     servers: localhost:9092
+
+redis:
+  uri: redis://localhost:6379
+  cache:
+    namespace: micronaut-demo
+  caches:
+    product-cache:
+      expire-after-write: 10m

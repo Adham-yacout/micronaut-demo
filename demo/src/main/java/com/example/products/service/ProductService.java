@@ -5,13 +5,17 @@ import com.example.products.exception.ProductNotFoundException;
 import com.example.products.messages.ProductEventProducer;
 import com.example.products.model.Product;
 import com.example.products.repository.ProductRepository;
+import io.micronaut.cache.annotation.CacheInvalidate;
+import io.micronaut.cache.annotation.Cacheable;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
+
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 
 import java.util.List;
@@ -31,11 +35,13 @@ public class ProductService {
         this.productEventProducer=productEventProducer;
     }
 
+
     public List<Product>  getAllProducts(){
 
         return productRepository.findAll();
     }
 
+    @Cacheable("product-cache")
     public Product getProductById(Integer id) {
         LOG.info("ana bageb product {}",id);
         return productRepository.findById(id)
@@ -57,7 +63,7 @@ public class ProductService {
 
         return savedProduct;
     }
-
+    @CacheInvalidate(cacheNames = "product-cache", all = true)
     public  void  deleteProduct(Integer id)
     {
         LOG.info("trying to delete product with id: {}",id );
@@ -65,6 +71,7 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+    @CacheInvalidate(cacheNames = "product-cache", all = true)
     public Optional<Product> updateProduct(Integer id, Product updatedProduct) {
         return productRepository.findById(id)
                 .map(existingProduct -> {
